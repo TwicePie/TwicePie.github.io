@@ -77,7 +77,7 @@ const Home = () => {
     };
   }, [displayedText, isTyping, currentTextIndex]);
   return (
-    <div className="min-h-screen space-y-12 p-4">
+    <div className="min-h-screen space-y-12 p-4 bg-transparent">
       {/* Hero Section */}
       <div className="px-4 py-16">
         <div className="text-center max-w-4xl mx-auto">
