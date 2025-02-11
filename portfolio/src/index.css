@@ -8,3 +8,55 @@
     min-height: 100vh;
   }
 }
+
+.starrynight-bg-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes twinkle1 {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+@keyframes twinkle2 {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 0.2; }
+}
+
+@keyframes twinkle3 {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+@keyframes twinkle4 {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.shootingstar {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: #fff;
+  border-radius: 50%;
+  animation: shoot 3s linear infinite;
+  transform: rotate(-45deg);
+  z-index: 0;
+}
+
+@keyframes shoot {
+  0% {
+    transform: rotate(-45deg) translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(-45deg) translateX(-1500px);
+    opacity: 0;
+  }
+}
