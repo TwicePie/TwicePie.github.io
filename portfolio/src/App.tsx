@@ -6,11 +6,12 @@ import StarryBackground from './components/StarryBackground'
 function App() {
   return (
     <Router basename="/">
-      <div className="min-h-screen">
-        
-        <Routes>
-          <Route path="/" element={<Home />} />
-        </Routes>
+      <div className="min-h-screen relative">
+        <div className="z-[20] relative">
+          <Routes>
+            <Route path="/" element={<Home />} />
+          </Routes>
+        </div>
         <StarryBackground />
       </div>
     </Router>
