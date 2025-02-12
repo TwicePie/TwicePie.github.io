@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom"
-
+import { Link } from "react-router-dom";
+import FrameworkSlider from "../components/FrameworkSlider";
 
 const projects = [
   {
@@ -128,13 +128,7 @@ const Home = () => {
           <section id="technologies" className="py-20 bg-base-200">
             <div className="container mx-auto px-4">
               <h2 className="text-3xl font-bold text-center mb-12">Technologies I Work With</h2>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-                {['React', 'TypeScript', 'Node.js', 'MongoDB', 'Next.js', 'Tailwind CSS', 'Git', 'Express'].map((tech) => (
-                  <div key={tech} className="flex flex-col items-center p-6 bg-base-100 rounded-lg shadow-md hover:shadow-lg transition-shadow">
-                    <span className="text-lg font-semibold">{tech}</span>
-                  </div>
-                ))}
-              </div>
+              <FrameworkSlider />
             </div>
           </section>
         </div>
