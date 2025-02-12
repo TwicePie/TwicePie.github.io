@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import FrameworkSlider from "../components/FrameworkSlider";
+import GithubActivity from "../components/GithubActivity";
 
 const projects = [
   {
@@ -119,18 +120,29 @@ const Home = () => {
         </div>
       </div>
 
-      {/* Technologies Section */}
-      <div className="mockup-browser bg-base-300 border">
-        <div className="mockup-browser-toolbar">
-          <div className="input">https://ocharu.dev/technologies</div>
+      {/* Technologies Section with GitHub Calendar */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="mockup-browser bg-base-300 border h-full">
+          <div className="mockup-browser-toolbar">
+            <div className="input">https://ocharu.dev/technologies</div>
+          </div>
+          <div className="bg-base-200 px-4 py-16 h-[calc(100%-3rem)]">
+            <section id="technologies" className="h-full flex flex-col justify-center">
+              <div className="container mx-auto px-4">
+                <h2 className="text-3xl font-bold text-center mb-12">Technologies I Work With</h2>
+                <FrameworkSlider />
+              </div>
+            </section>
+          </div>
         </div>
-        <div className="bg-base-200 px-4 py-16">
-          <section id="technologies" className="py-20 bg-base-200">
-            <div className="container mx-auto px-4">
-              <h2 className="text-3xl font-bold text-center mb-12">Technologies I Work With</h2>
-              <FrameworkSlider />
-            </div>
-          </section>
+
+        <div className="mockup-browser bg-base-300 border h-full">
+          <div className="mockup-browser-toolbar">
+            <div className="input">https://github.com/TwicePie</div>
+          </div>
+          <div className="bg-base-200 px-4 py-16 h-[calc(100%-3rem)]">
+            <GithubActivity />
+          </div>
         </div>
       </div>
 
