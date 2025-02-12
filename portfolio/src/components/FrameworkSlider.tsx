@@ -16,7 +16,7 @@ const frameworks = [
 const FrameworkSlider = () => {
     return (
         <Slider
-            width="150px"
+            width="120px"
             duration={40}
             pauseOnHover={true}
             blurBorders={false}
@@ -24,13 +24,13 @@ const FrameworkSlider = () => {
         >
             {frameworks.map((framework, index) => (
                 <Slider.Slide key={index}>
-                    <div className="flex flex-col items-center gap-2">
+                    <div className="flex flex-col items-center gap-1">
                         <img 
                             src={framework.image} 
                             alt={framework.name} 
-                            className="w-16 h-16 object-contain"
+                            className="w-12 h-12 object-contain"
                         />
-                        <span className="text-sm font-medium">{framework.name}</span>
+                        <span className="text-xs font-medium">{framework.name}</span>
                     </div>
                 </Slider.Slide>
             ))}

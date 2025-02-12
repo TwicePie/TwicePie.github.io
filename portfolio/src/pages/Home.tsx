@@ -124,24 +124,41 @@ const Home = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="mockup-browser bg-base-300 border h-full">
           <div className="mockup-browser-toolbar">
-            <div className="input">https://ocharu.dev/technologies</div>
+            <div className="input">https://ocharu.dev/about</div>
           </div>
           <div className="bg-base-200 px-4 py-16 h-[calc(100%-3rem)]">
-            <section id="technologies" className="h-full flex flex-col justify-center">
-              <div className="container mx-auto px-4">
-                <h2 className="text-3xl font-bold text-center mb-12">Technologies I Work With</h2>
-                <FrameworkSlider />
-              </div>
-            </section>
+            <div className="h-full flex flex-col justify-center">
+              <h2 className="text-3xl font-bold mb-6">About Me</h2>
+              <p className="text-lg mb-4">
+                I'm a passionate full-stack developer with expertise in modern web technologies.
+                I love creating efficient, scalable, and user-friendly solutions to complex problems.
+              </p>
+              <p className="text-lg">
+                When I'm not coding, you can find me exploring new technologies,
+                contributing to open-source projects, or sharing knowledge with the developer community.
+              </p>
+            </div>
           </div>
         </div>
 
-        <div className="mockup-browser bg-base-300 border h-full">
-          <div className="mockup-browser-toolbar">
-            <div className="input">https://github.com/TwicePie</div>
+        <div className="flex flex-col gap-4">
+          <div className="mockup-browser bg-base-300 border">
+            <div className="mockup-browser-toolbar">
+              <div className="input">https://ocharu.dev/technologies</div>
+            </div>
+            <div className="bg-base-200 px-4 py-8">
+              <h2 className="text-2xl font-bold text-center mb-6">Technologies I Work With</h2>
+              <FrameworkSlider />
+            </div>
           </div>
-          <div className="bg-base-200 px-4 py-16 h-[calc(100%-3rem)]">
-            <GithubActivity />
+
+          <div className="mockup-browser bg-base-300 border">
+            <div className="mockup-browser-toolbar">
+              <div className="input">https://github.com/TwicePie</div>
+            </div>
+            <div className="bg-base-200 px-4 py-8">
+              <GithubActivity />
+            </div>
           </div>
         </div>
       </div>
