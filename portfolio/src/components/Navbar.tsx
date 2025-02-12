@@ -1,6 +1,8 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 const Navbar = () => {
+  const location = useLocation();
+
   return (
     <div className="fixed top-4 left-0 right-0 z-50 px-4">
       <div className="navbar bg-base-100 max-w-4xl mx-auto rounded-box shadow-lg bg-opacity-90 backdrop-blur-md">
@@ -12,19 +14,21 @@ const Navbar = () => {
               </svg>
             </div>
             <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-              <li><Link to="/">Home</Link></li>
-              <li><Link to="/projects">Projects</Link></li>
-              <li><Link to="/about">About</Link></li>
+              <div role="tablist" className="tabs tabs-bordered">
+                <Link role="tab" className={`tab ${location.pathname === '/' ? 'tab-active' : ''}`} to="/">Home</Link>
+                <Link role="tab" className={`tab ${location.pathname === '/projects' ? 'tab-active' : ''}`} to="/projects">Projects</Link>
+                <Link role="tab" className={`tab ${location.pathname === '/about' ? 'tab-active' : ''}`} to="/about">About</Link>
+              </div>
             </ul>
           </div>
           <Link to="/" className="btn btn-ghost text-xl">Ocharu</Link>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/projects">Projects</Link></li>
-            <li><Link to="/about">About</Link></li>
-          </ul>
+          <div role="tablist" className="tabs tabs-bordered">
+            <Link role="tab" className={`tab ${location.pathname === '/' ? 'tab-active' : ''}`} to="/">Home</Link>
+            <Link role="tab" className={`tab ${location.pathname === '/projects' ? 'tab-active' : ''}`} to="/projects">Projects</Link>
+            <Link role="tab" className={`tab ${location.pathname === '/about' ? 'tab-active' : ''}`} to="/about">About</Link>
+          </div>
         </div>
         <div className="navbar-end">
           <a className="btn btn-primary">Contact</a>
