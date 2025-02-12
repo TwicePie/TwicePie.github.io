@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 const Navbar = () => {
   return (
-    <div className="fixed top-4 left-0 right-0 z-50">
+    <div className="fixed top-4 left-0 right-0 z-50 px-4">
       <div className="navbar bg-base-100 max-w-4xl mx-auto rounded-box shadow-lg bg-opacity-90 backdrop-blur-md">
         <div className="navbar-start">
           <div className="dropdown">
