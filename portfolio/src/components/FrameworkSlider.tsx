@@ -15,26 +15,27 @@ const frameworks = [
 
 const FrameworkSlider = () => {
     return (
-        <Slider
-            width="120px"
-            duration={40}
-            pauseOnHover={true}
-            blurBorders={false}
-            blurBorderColor={'#fff'}
-        >
-            {frameworks.map((framework, index) => (
-                <Slider.Slide key={index}>
-                    <div className="flex flex-col items-center gap-1">
-                        <img 
-                            src={framework.image} 
-                            alt={framework.name} 
-                            className="w-12 h-12 object-contain"
-                        />
-                        <span className="text-xs font-medium">{framework.name}</span>
-                    </div>
-                </Slider.Slide>
-            ))}
-        </Slider>
+        <div className="flex items-center justify-center h-full">
+            <Slider
+                width="100px"
+                duration={40}
+                pauseOnHover={true}
+                blurBorders={false}
+            >
+                {frameworks.map((framework, index) => (
+                    <Slider.Slide key={index}>
+                        <div className="flex flex-col items-center gap-1">
+                            <img 
+                                src={framework.image} 
+                                alt={framework.name} 
+                                className="w-8 h-8 object-contain"
+                            />
+                            <span className="text-xs font-medium">{framework.name}</span>
+                        </div>
+                    </Slider.Slide>
+                ))}
+            </Slider>
+        </div>
     )
 }
 

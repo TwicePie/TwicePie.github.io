@@ -121,23 +121,23 @@ const Home = () => {
       </div>
 
       {/* Technologies Section with GitHub Calendar */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 auto-rows-fr">
         <AboutMe />
         <div className="flex flex-col gap-4">
-          <div className="mockup-browser bg-base-300 border">
+          <div className="mockup-browser bg-base-300 border h-[200px]">
             <div className="mockup-browser-toolbar">
               <div className="input">My Tech</div>
             </div>
-            <div className="bg-base-200 px-4 py-8">
+            <div className="bg-base-200 h-[calc(100%-3rem)]">
               <FrameworkSlider />
             </div>
           </div>
 
-          <div className="mockup-browser bg-base-300 border">
+          <div className="mockup-browser bg-base-300 border h-[200px]">
             <div className="mockup-browser-toolbar">
               <div className="input">Github Contributions</div>
             </div>
-            <div className="bg-base-200 px-4 py-8">
+            <div className="bg-base-200 h-[calc(100%-3rem)]">
               <GithubActivity />
             </div>
           </div>

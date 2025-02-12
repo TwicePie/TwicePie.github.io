@@ -2,12 +2,14 @@ import GitHubCalendar from 'react-github-calendar';
 
 const GithubActivity = () => {
   return (
-    <div className="p-2">
-      <div className="overflow-x-auto">
+    <div className="flex items-center justify-center h-full">
+      <div className="scale-90 transform-gpu">
         <GitHubCalendar 
           username="TwicePie"
           colorScheme='dark'
-          fontSize={10}
+          fontSize={8}
+          hideColorLegend
+          hideMonthLabels
         />
       </div>
     </div>
