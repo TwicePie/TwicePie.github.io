@@ -9,10 +9,10 @@ const AboutMe = () => {
           <div className="card bg-base-100 shadow-lg">
             <div className="card-body py-4">
               <div className="flex items-center gap-3">
-                <span className="text-4xl">💻</span>
+                <span className="text-4xl">👋</span>
                 <div>
-                  <h3 className="card-title">Full Stack Developer</h3>
-                  <p className="text-sm opacity-80">Web & Mobile Development</p>
+                  <h3 className="card-title">Hi, I'm Eka!</h3>
+                  <p className="text-sm opacity-80">Based in Indonesia</p>
                 </div>
               </div>
             </div>
@@ -22,15 +22,15 @@ const AboutMe = () => {
             <div className="grid grid-cols-2 gap-2">
               <div className="stat-card bg-base-300 p-3 rounded-lg hover:bg-primary hover:text-primary-content transition-all">
                 <div className="font-bold flex items-center gap-2">
-                  <span>🎨</span> Frontend
+                  <span>🎓</span> Education
                 </div>
-                <p className="text-sm mt-1">React, Vue, TypeScript</p>
+                <p className="text-sm mt-1">Computer Science</p>
               </div>
               <div className="stat-card bg-base-300 p-3 rounded-lg hover:bg-primary hover:text-primary-content transition-all">
                 <div className="font-bold flex items-center gap-2">
-                  <span>⚙️</span> Backend
+                  <span>💡</span> Interests
                 </div>
-                <p className="text-sm mt-1">Node.js, Express</p>
+                <p className="text-sm mt-1">Web & Mobile Dev</p>
               </div>
             </div>
           </div>
@@ -38,7 +38,7 @@ const AboutMe = () => {
           <div className="card bg-gradient-to-r from-primary/10 to-accent/10">
             <div className="card-body py-3 text-center">
               <p className="font-medium text-sm">
-                Turning ideas into reality 🚀
+                Tech enthusiast & lifelong learner 🌟
               </p>
             </div>
           </div>
