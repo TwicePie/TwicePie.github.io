@@ -121,81 +121,87 @@ const Home = () => {
       </div>
 
       {/* Technologies Section with GitHub Calendar */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 auto-rows-fr">
-        <AboutMe />
-        <div className="flex flex-col gap-4">
-          <div className="mockup-browser bg-base-300 border h-[200px]">
-            <div className="mockup-browser-toolbar">
-              <div className="input">My Tech</div>
+      <div className="container mx-auto max-w-6xl">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 auto-rows-fr">
+          <AboutMe />
+          <div className="flex flex-col gap-4">
+            <div className="mockup-browser bg-base-300 border h-[200px]">
+              <div className="mockup-browser-toolbar">
+                <div className="input">My Tech</div>
+              </div>
+              <div className="bg-base-200 h-[calc(100%-3rem)]">
+                <FrameworkSlider />
+              </div>
             </div>
-            <div className="bg-base-200 h-[calc(100%-3rem)]">
-              <FrameworkSlider />
-            </div>
-          </div>
 
-          <div className="mockup-browser bg-base-300 border h-[200px]">
-            <div className="mockup-browser-toolbar">
-              <div className="input">Github Contributions</div>
-            </div>
-            <div className="bg-base-200 h-[calc(100%-3rem)]">
-              <GithubActivity />
+            <div className="mockup-browser bg-base-300 border h-[200px]">
+              <div className="mockup-browser-toolbar">
+                <div className="input">Github Contributions</div>
+              </div>
+              <div className="bg-base-200 h-[calc(100%-3rem)]">
+                <GithubActivity />
+              </div>
             </div>
           </div>
         </div>
       </div>
 
       {/* Featured Projects Section */}
-      <div className="mockup-browser bg-base-300 border">
-        <div className="mockup-browser-toolbar">
-          <div className="input">https://ocharu.dev/projects</div>
-        </div>
-        <div className="bg-base-200 px-4 py-16">
-          <section id="projects" className="py-20">
-            <div className="container mx-auto px-4">
-              <h2 className="text-3xl font-bold text-center mb-12">Featured Projects</h2>
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {projects.map((project, index) => (
-                  <div key={index} className="card bg-base-100 shadow-xl">
-                    <figure><img src={project.image} alt={project.title} className="w-full h-48 object-cover" /></figure>
-                    <div className="card-body">
-                      <h3 className="card-title">{project.title}</h3>
-                      <p>{project.description}</p>
-                      <div className="card-actions justify-end">
-                        <a href={project.github} className="btn btn-primary" target="_blank" rel="noopener noreferrer">View Project</a>
+      <div className="container mx-auto max-w-6xl">
+        <div className="mockup-browser bg-base-300 border">
+          <div className="mockup-browser-toolbar">
+            <div className="input">https://ocharu.dev/projects</div>
+          </div>
+          <div className="bg-base-200 px-4 py-16">
+            <section id="projects" className="py-20">
+              <div className="container mx-auto px-4">
+                <h2 className="text-3xl font-bold text-center mb-12">Featured Projects</h2>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {projects.map((project, index) => (
+                    <div key={index} className="card bg-base-100 shadow-xl">
+                      <figure><img src={project.image} alt={project.title} className="w-full h-48 object-cover" /></figure>
+                      <div className="card-body">
+                        <h3 className="card-title">{project.title}</h3>
+                        <p>{project.description}</p>
+                        <div className="card-actions justify-end">
+                          <a href={project.github} className="btn btn-primary" target="_blank" rel="noopener noreferrer">View Project</a>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
-          </section>
+            </section>
+          </div>
         </div>
       </div>
 
       {/* Contact Section */}
-      <div className="mockup-browser bg-base-300 border">
-        <div className="mockup-browser-toolbar">
-          <div className="input">https://ocharu.dev/contact</div>
-        </div>
-        <div className="bg-base-200 px-4 py-16">
-          <section id="contact" className="py-20 bg-base-200">
-            <div className="container mx-auto px-4">
-              <h2 className="text-3xl font-bold text-center mb-12">Get In Touch</h2>
-              <div className="max-w-2xl mx-auto">
-                <div className="flex flex-col md:flex-row gap-8 justify-center items-center">
-                  <a href="mailto:your.email@example.com" className="btn btn-primary btn-lg">
-                    Email Me
-                  </a>
-                  <a href="https://github.com/yourusername" className="btn btn-outline btn-lg" target="_blank" rel="noopener noreferrer">
-                    GitHub
-                  </a>
-                  <a href="https://linkedin.com/in/yourusername" className="btn btn-outline btn-lg" target="_blank" rel="noopener noreferrer">
-                    LinkedIn
-                  </a>
+      <div className="container mx-auto max-w-6xl">
+        <div className="mockup-browser bg-base-300 border">
+          <div className="mockup-browser-toolbar">
+            <div className="input">https://ocharu.dev/contact</div>
+          </div>
+          <div className="bg-base-200 px-4 py-16">
+            <section id="contact" className="py-20 bg-base-200">
+              <div className="container mx-auto px-4">
+                <h2 className="text-3xl font-bold text-center mb-12">Get In Touch</h2>
+                <div className="max-w-2xl mx-auto">
+                  <div className="flex flex-col md:flex-row gap-8 justify-center items-center">
+                    <a href="mailto:your.email@example.com" className="btn btn-primary btn-lg">
+                      Email Me
+                    </a>
+                    <a href="https://github.com/yourusername" className="btn btn-outline btn-lg" target="_blank" rel="noopener noreferrer">
+                      GitHub
+                    </a>
+                    <a href="https://linkedin.com/in/yourusername" className="btn btn-outline btn-lg" target="_blank" rel="noopener noreferrer">
+                      LinkedIn
+                    </a>
+                  </div>
                 </div>
               </div>
-            </div>
-          </section>
+            </section>
+          </div>
         </div>
       </div>
     </div>
