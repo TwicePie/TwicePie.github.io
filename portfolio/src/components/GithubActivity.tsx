@@ -12,7 +12,6 @@ const GithubActivity = () => {
           hideColorLegend
           hideMonthLabels
           style={{ width: '100%', maxWidth: '100%' }}
-          loading={true}
         />
       </div>
     </div>
