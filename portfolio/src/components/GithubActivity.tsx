@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import GitHubCalendar from 'react-github-calendar';
 
 const GithubActivity = () => {
@@ -11,10 +12,11 @@ const GithubActivity = () => {
           hideColorLegend
           hideMonthLabels
           style={{ width: '100%', maxWidth: '100%' }}
+          loading={true}
         />
       </div>
     </div>
   );
 };
 
-export default GithubActivity;
+export default memo(GithubActivity);

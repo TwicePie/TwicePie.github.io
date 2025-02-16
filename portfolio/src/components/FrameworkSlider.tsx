@@ -1,5 +1,7 @@
+import { memo } from 'react';
 import Slider from 'react-infinite-logo-slider'
 
+// Move this outside component to prevent recreation on each render
 const frameworks = [
     { name: 'React', image: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg' },
     { name: 'TypeScript', image: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg' },
@@ -29,6 +31,9 @@ const FrameworkSlider = () => {
                                 src={framework.image} 
                                 alt={framework.name} 
                                 className="w-8 h-8 object-contain"
+                                loading="lazy"
+                                width="32"
+                                height="32"
                             />
                             <span className="text-xs font-medium">{framework.name}</span>
                         </div>
@@ -39,4 +44,4 @@ const FrameworkSlider = () => {
     )
 }
 
-export default FrameworkSlider
+export default memo(FrameworkSlider);

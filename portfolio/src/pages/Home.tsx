@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, lazy, Suspense } from "react";
 import { Link } from "react-router-dom";
-import FrameworkSlider from "../components/FrameworkSlider";
-import GithubActivity from "../components/GithubActivity";
-import AboutMe from "../components/AboutMe";
-import Project from "./Project";
+
+// Lazy load components
+const FrameworkSlider = lazy(() => import("../components/FrameworkSlider"));
+const GithubActivity = lazy(() => import("../components/GithubActivity"));
+const AboutMe = lazy(() => import("../components/AboutMe"));
+const Project = lazy(() => import("./Project"));
 
 const Home = () => {
   const [displayedText, setDisplayedText] = useState("");
@@ -20,6 +22,7 @@ const Home = () => {
   useEffect(() => {
     let isMounted = true;
     let timeoutId: ReturnType<typeof setTimeout>;
+    let animationFrameId: number;
 
     const typeText = () => {
       if (!isMounted) return;
@@ -28,9 +31,9 @@ const Home = () => {
 
       if (isTyping) {
         if (displayedText.length < currentText.length) {
-          timeoutId = setTimeout(() => {
+          animationFrameId = requestAnimationFrame(() => {
             setDisplayedText((prev) => currentText.slice(0, prev.length + 1));
-          }, typingSpeed);
+          });
         } else {
           timeoutId = setTimeout(() => {
             setIsTyping(false);
@@ -50,13 +53,15 @@ const Home = () => {
       }
     };
 
-    typeText();
+    timeoutId = setTimeout(typeText, isTyping ? typingSpeed : backspacingSpeed);
 
     return () => {
       isMounted = false;
       if (timeoutId) clearTimeout(timeoutId);
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
     };
   }, [displayedText, isTyping, currentTextIndex]);
+
   return (
     <div className="min-h-screen space-y-12 p-4 bg-transparent">
       {/* Hero Section */}
@@ -103,31 +108,38 @@ const Home = () => {
       {/* Technologies Section with GitHub Calendar */}
       <div className="container mx-auto max-w-6xl">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 auto-rows-fr">
-          <AboutMe />
+          <Suspense fallback={<div className="loading loading-spinner loading-lg"></div>}>
+            <AboutMe />
+          </Suspense>
           <div className="flex flex-col gap-4">
-            <div className="mockup-browser bg-base-300 border h-[200px]">
-              <div className="mockup-browser-toolbar">
-                <div className="input">My Tech</div>
+            <Suspense fallback={<div className="loading loading-spinner loading-lg"></div>}>
+              <div className="mockup-browser bg-base-300 border h-[200px]">
+                <div className="mockup-browser-toolbar">
+                  <div className="input">My Tech</div>
+                </div>
+                <div className="bg-base-200 h-[calc(100%-3rem)]">
+                  <FrameworkSlider />
+                </div>
               </div>
-              <div className="bg-base-200 h-[calc(100%-3rem)]">
-                <FrameworkSlider />
-              </div>
-            </div>
+            </Suspense>
 
-            <div className="mockup-browser bg-base-300 border h-[200px]">
-              <div className="mockup-browser-toolbar">
-                <div className="input">Github Contributions</div>
+            <Suspense fallback={<div className="loading loading-spinner loading-lg"></div>}>
+              <div className="mockup-browser bg-base-300 border h-[200px]">
+                <div className="mockup-browser-toolbar">
+                  <div className="input">Github Contributions</div>
+                </div>
+                <div className="bg-base-200 h-[calc(100%-3rem)]">
+                  <GithubActivity />
+                </div>
               </div>
-              <div className="bg-base-200 h-[calc(100%-3rem)]">
-                <GithubActivity />
-              </div>
-            </div>
+            </Suspense>
           </div>
         </div>
       </div>
 
-      {/* Featured Projects Section */}
-      <Project />
+      <Suspense fallback={<div className="loading loading-spinner loading-lg"></div>}>
+        <Project />
+      </Suspense>
 
       {/* Contact Section */}
       <div className="container mx-auto max-w-6xl">
