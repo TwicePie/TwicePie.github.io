@@ -1,24 +1,24 @@
 const projects = [
   {
-    title: "Project 1",
+    title: "Depo 79",
     description: "Description of your first project",
     image: "/images/project1.jpg",
-    github: "https://github.com/yourusername/project1",
-    tags: ["React", "TypeScript", "Tailwind"]
+    github: "https://github.com/Haeryz/E-Commerce-depo-79",
+    tags: ["React", "TypeScript", "ChakraUI"]
   },
   {
-    title: "Project 2",
+    title: "Kuliner Keputih Timur Web Menu",
     description: "Description of your second project",
     image: "/images/project2.jpg",
-    github: "https://github.com/yourusername/project2",
-    tags: ["Next.js", "JavaScript", "CSS"]
+    github: "https://github.com/TwicePie/Kuliner_Keputih_Timur",
+    tags: ["React", "JavaScript", "CSS"]
   },
   {
-    title: "Project 3",
+    title: "DressMaker App",
     description: "Description of your third project",
     image: "/images/project3.jpg",
-    github: "https://github.com/yourusername/project3",
-    tags: ["Node.js", "Express", "MongoDB"]
+    github: "https://github.com/reddishowo/dressmaker-app",
+    tags: ["Flutter", "Dart", "Firebase"]
   }
 ];
 

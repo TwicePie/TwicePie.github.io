@@ -107,7 +107,7 @@ const Home = () => {
           {/* Social Media Icons */}
           <div className="flex justify-center gap-6 mt-8">
             <a
-              href="https://github.com/yourusername"
+              href="https://github.com/twicepie"
               target="_blank"
               rel="noopener noreferrer"
               className="text-base-content hover:text-primary transition-colors duration-300"
@@ -123,7 +123,7 @@ const Home = () => {
               </svg>
             </a>
             <a
-              href="https://linkedin.com/in/yourusername"
+              href="https://www.linkedin.com/in/muhammad-eka-nur-arief-6b9543267/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-base-content hover:text-primary transition-colors duration-300"
@@ -139,7 +139,7 @@ const Home = () => {
               </svg>
             </a>
             <a
-              href="https://instagram.com/yourusername"
+              href="https://www.instagram.com/xd_eka/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-base-content hover:text-primary transition-colors duration-300"
