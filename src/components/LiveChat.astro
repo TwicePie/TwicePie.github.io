@@ -1,0 +1,440 @@
+---
+// LiveChat.astro — Message board / live chat backed by Google Sheets + Apps Script.
+// Frontend polls every 4s. Backend (Code.gs) enforces 1 message per name.
+//
+// >>> TO ACTIVATE: replace the API_URL below with your Apps Script Web App URL <<<
+import { sections, ui } from "../data/content";
+import T from "./T.astro";
+---
+<section id="contact" class="section">
+  <div class="container">
+    <span class="section-label reveal">07 — <T en={sections.contact.en} id={sections.contact.id} /></span>
+    <h2 class="section-title reveal"><T en={sections.contact.en} id={sections.contact.id} /></h2>
+
+    <div class="chat-wrap reveal">
+      <div class="chat-head">
+        <div>
+          <h3><T en={ui.liveChatTitle.en} id={ui.liveChatTitle.id} /></h3>
+          <p class="chat-sub muted"><T en={ui.liveChatSubtitle.en} id={ui.liveChatSubtitle.id} /></p>
+        </div>
+        <span class="chat-status" id="chat-status">
+          <span class="status-dot"></span>
+          <span class="mono">live</span>
+        </span>
+      </div>
+
+      <!-- ===== Message list (polled) ===== -->
+      <div id="chat-list" class="chat-list" aria-live="polite">
+        <p class="chat-loading muted mono" data-i18n="loading">
+          <T en={ui.chatLoading.en} id={ui.chatLoading.id} />
+        </p>
+      </div>
+
+      <!-- ===== Form ===== -->
+      <form id="chat-form" class="chat-form" autocomplete="off">
+        <!-- Honeypot: hidden from humans, bots fill it → rejected -->
+        <input type="text" name="website" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <input
+          type="text"
+          id="chat-name"
+          name="name"
+          required
+          maxlength="40"
+          class="chat-input"
+          data-ph-en={ui.chatPlaceholderName.en}
+          data-ph-id={ui.chatPlaceholderName.id}
+        />
+        <textarea
+          id="chat-msg"
+          name="message"
+          required
+          maxlength="280"
+          rows="2"
+          class="chat-input chat-msg"
+          data-ph-en={ui.chatPlaceholderMsg.en}
+          data-ph-id={ui.chatPlaceholderMsg.id}
+        ></textarea>
+        <button type="submit" id="chat-send" class="btn btn-primary chat-submit">
+          <T en={ui.chatSend.en} id={ui.chatSend.id} />
+        </button>
+      </form>
+      <p id="chat-feedback" class="chat-feedback" role="status"></p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .chat-wrap {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background: var(--color-surface);
+    overflow: hidden;
+  }
+  .chat-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .chat-head h3 { font-size: 1.15rem; }
+  .chat-sub { font-size: 0.85rem; margin-top: 0.25rem; }
+  .chat-status {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.75rem;
+    color: var(--color-text-dim);
+  }
+  .status-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #4ade80;
+    box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.5);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.5); }
+    70% { box-shadow: 0 0 0 8px rgba(74, 222, 128, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); }
+  }
+
+  .chat-list {
+    max-height: 360px;
+    overflow-y: auto;
+    padding: 1rem 1.5rem;
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 0.75rem;
+    min-height: 120px;
+  }
+  .chat-list::-webkit-scrollbar { width: 6px; }
+  .chat-list::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 3px; }
+
+  /* These elements are created dynamically via JS innerHTML, so they
+     don't get Astro's scoped-style attributes. Use :global() to apply. */
+  :global(.msg-item) {
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-sm);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    animation: msgIn 0.4s ease;
+  }
+  @keyframes msgIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  :global(.msg-head) {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.1rem;
+    margin-bottom: 0.35rem;
+  }
+  :global(.msg-name) { font-weight: 600; font-size: 0.85rem; }
+  :global(.msg-time) { font-size: 0.68rem; color: var(--color-text-dim); font-family: var(--font-mono); font-weight: 400; }
+  :global(.msg-text) { font-size: 0.92rem; color: var(--color-text-muted); word-wrap: break-word; }
+
+  /* Dynamically created VIP password field needs :global() */
+  :global(.chat-pwd) {
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: 0.65rem 0.85rem;
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    transition: border-color var(--transition);
+  }
+  :global(.chat-pwd:focus) { outline: none; border-color: var(--color-accent); }
+
+  .chat-loading { text-align: center; padding: 2rem 0; font-size: 0.85rem; }
+  .chat-empty { text-align: center; padding: 2rem 0; color: var(--color-text-dim); font-size: 0.9rem; }
+
+  .chat-form {
+    display: grid;
+    grid-template-columns: 200px 1fr auto;
+    gap: 0.75rem;
+    padding: 1.5rem;
+    border-top: 1px solid var(--color-border);
+    background: var(--color-surface);
+  }
+  .chat-input {
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: 0.65rem 0.85rem;
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    transition: border-color var(--transition);
+    resize: none;
+  }
+  .chat-input:focus { outline: none; border-color: var(--color-accent); }
+  .chat-msg { min-height: 44px; }
+  .chat-form.vip-mode { grid-template-columns: 200px 200px 1fr auto; }
+  .chat-submit { padding: 0 1.5rem; align-self: stretch; }
+
+  /* Honeypot: hidden visually but visible to bots */
+  .hp-field {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .chat-feedback {
+    padding: 0 1.5rem 1rem;
+    font-size: 0.85rem;
+    min-height: 1.2rem;
+    color: var(--color-text-muted);
+  }
+  .chat-feedback.error { color: #f87171; }
+  .chat-feedback.success { color: #4ade80; }
+
+  @media (max-width: 600px) {
+    .chat-form { grid-template-columns: 1fr; }
+    .chat-form.vip-mode { grid-template-columns: 1fr; }
+    .chat-submit { justify-self: start; padding: 0.65rem 2rem; }
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    // ============================================================
+    //  >>> PASTE YOUR APPS SCRIPT WEB APP URL HERE <<<
+    //    Get it from Deploy > Manage deployments > Web app URL.
+    // ============================================================
+    const API_URL = "https://script.google.com/macros/s/AKfycbzRPB4JH8qYmAozdcTPSFzVnGJJJ26Cr-B0lOLp_KUJGQXFCg4Sr44X7RuBy77K-QYo/exec";
+
+    const form = document.getElementById("chat-form");
+    const list = document.getElementById("chat-list");
+    const sendBtn = document.getElementById("chat-send");
+    const feedback = document.getElementById("chat-feedback");
+    const nameInput = document.getElementById("chat-name");
+    const msgInput = document.getElementById("chat-msg");
+
+    // ---- Anti-spam: page load timestamp (time throttle) ----
+    const pageLoadedAt = Date.now();
+
+    // ---- Special link: ?token=<value> unlocks multi-chat mode ----
+    // Normal visitors: 1 message per name.
+    // Special person with the link + password: can send multiple messages.
+    // NOTE: the token + password are verified SERVER-SIDE in Code.gs.
+    // No secret values are stored in this file.
+    var isVIP = false;
+    var vipTokenVal = "";
+    try {
+      var params = new URLSearchParams(window.location.search);
+      var tk = params.get("token");
+      if (tk) {
+        vipTokenVal = tk;
+        var tokenInput = document.createElement("input");
+        tokenInput.type = "hidden";
+        tokenInput.name = "token";
+        tokenInput.value = tk;
+        form.appendChild(tokenInput);
+        isVIP = true;
+        nameInput.value = "Princess";
+        nameInput.readOnly = true;
+        var pwdInput = document.createElement("input");
+        pwdInput.type = "password";
+        pwdInput.name = "vipwd";
+        pwdInput.required = true;
+        pwdInput.maxLength = 40;
+        pwdInput.className = "chat-input chat-pwd";
+        pwdInput.setAttribute("placeholder", "Password");
+        pwdInput.setAttribute("autocomplete", "off");
+        form.insertBefore(pwdInput, msgInput);
+        form.classList.add("vip-mode");
+      }
+    } catch (err) { /* ignore */ }
+
+    // current language helper
+    const lang = () => document.documentElement.getAttribute("data-lang") || "en";
+    const t = (en, id) => (lang() === "id" ? id : en);
+
+    // sync placeholders with language
+    function syncPlaceholders() {
+      [nameInput, msgInput].forEach((el) => {
+        el.setAttribute("placeholder", el.getAttribute("data-ph-" + lang()));
+      });
+    }
+    syncPlaceholders();
+    document.addEventListener("click", (e) => {
+      if (e.target && e.target.id === "lang-toggle") syncPlaceholders();
+    });
+
+    let seen = new Set();
+    let lastCount = 0;
+
+    // Smart polling config (saves Apps Script quota)
+    const POLL_INTERVAL = 10000;       // 10s when chat on-screen & tab active
+    const POLL_INTERVAL_IDLE = 30000;  // 30s fallback (not used now, reserved)
+    let pollTimer = null;
+    let chatVisible = false;
+
+    // ---- Poll messages (smart interval) ----
+    async function loadMessages() {
+      if (API_URL === "PASTE_YOUR_APPS_SCRIPT_URL_HERE") {
+        list.innerHTML = '<p class="chat-empty">' +
+          t("Set API_URL in the LiveChat script to connect the message board.",
+            "Set API_URL di script LiveChat untuk menghubungkan papan pesan.") + "</p>";
+        return;
+      }
+      try {
+        const res = await fetch(API_URL + "?action=read&t=" + Date.now(), { method: "GET" });
+        const data = await res.json();
+        if (!data.ok) throw new Error(data.error || "fail");
+
+        const msgs = data.messages || [];
+        if (msgs.length === 0) {
+          list.innerHTML = '<p class="chat-empty">' +
+            t("No messages yet. Be the first!", "Belum ada pesan. Jadilah yang pertama!") + "</p>";
+          return;
+        }
+        // only re-render if new messages arrived
+        if (msgs.length !== lastCount) {
+          lastCount = msgs.length;
+          renderMessages(msgs);
+        }
+      } catch (err) {
+        // keep existing messages; show subtle error only if list is empty
+        if (lastCount === 0) {
+          list.innerHTML = '<p class="chat-empty">' +
+            t("Could not connect. Please try again later.",
+              "Tidak dapat terhubung. Coba lagi nanti.") + "</p>";
+        }
+      }
+    }
+
+    function renderMessages(msgs) {
+      // newest first (column-reverse flips order, so we prepend oldest)
+      list.innerHTML = msgs
+        .map(
+          (m) =>
+            '<div class="msg-item">' +
+            '<div class="msg-head">' +
+            '<span class="msg-name">' + escapeHtml(m.name) + "</span>" +
+            '<span class="msg-time">' + escapeHtml(m.time) + "</span>" +
+            "</div>" +
+            '<p class="msg-text">' + escapeHtml(m.message) + "</p>" +
+            "</div>"
+        )
+        .join("");
+    }
+
+    function escapeHtml(str) {
+      var amp = String.fromCharCode(38); // &
+      return String(str).replace(/[&<>"']/g, function (c) {
+        if (c === "&") return amp + "amp;";
+        if (c === "<") return amp + "lt;";
+        if (c === ">") return amp + "gt;";
+        if (c === '"') return amp + "quot;";
+        if (c === "'") return amp + "#39;";
+        return c;
+      });
+    }
+
+    // ---- Submit new message ----
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      // ---- Anti-spam checks (client-side, also enforced server-side) ----
+      // 1. Honeypot: if "website" field is filled, it's a bot
+      var hpField = form.querySelector('input[name="website"]');
+      if (hpField && hpField.value !== "") { return; }
+      // 2. Time throttle: reject if submitted < 5s after page load (bot too fast)
+      if (Date.now() - pageLoadedAt < 5000) {
+        feedback.className = "chat-feedback error";
+        feedback.textContent = t("Too fast. Please wait a moment and try again.",
+          "Terlalu cepat. Tunggu sebentar lalu coba lagi.");
+        return;
+      }
+
+      sendBtn.disabled = true;
+      const original = sendBtn.textContent;
+      sendBtn.textContent = t("Sending...", "Mengirim...");
+      feedback.className = "chat-feedback";
+
+      try {
+        const body = new FormData(form);
+        const res = await fetch(API_URL, { method: "POST", body: body });
+        const data = await res.json();
+
+        if (data.ok) {
+          feedback.className = "chat-feedback success";
+          feedback.textContent = t("Message sent!", "Pesan terkirim!");
+          form.reset();
+          syncPlaceholders();
+          // Re-apply VIP fields after reset (form.reset clears them)
+          if (isVIP) {
+            nameInput.value = "Princess";
+            nameInput.readOnly = true;
+            var tokenEl = form.querySelector('input[name="token"]');
+            if (tokenEl) tokenEl.value = vipTokenVal;
+          }
+          lastCount = 0; // force re-render
+          loadMessages();
+        } else if (data.duplicate) {
+          feedback.className = "chat-feedback error";
+          feedback.textContent = t("This name already left a message.",
+            "Nama ini sudah meninggalkan pesan.");
+        } else if (data.wrongpwd) {
+          feedback.className = "chat-feedback error";
+          feedback.textContent = t("Wrong password.", "Password salah.");
+          // Re-apply VIP fields after failed submit
+          if (isVIP) {
+            nameInput.value = "Princess";
+            nameInput.readOnly = true;
+            var tokenEl2 = form.querySelector('input[name="token"]');
+            if (tokenEl2) tokenEl2.value = vipTokenVal;
+          }
+        } else if (data.banned) {
+          feedback.className = "chat-feedback error";
+          feedback.textContent = t("Message contains banned content.",
+            "Pesan mengandung konten yang dilarang.");
+        } else {
+          throw new Error(data.error || "fail");
+        }
+      } catch (err) {
+        feedback.className = "chat-feedback error";
+        feedback.textContent = t("Could not connect. Please try again later.",
+          "Tidak dapat terhubung. Coba lagi nanti.");
+      } finally {
+        sendBtn.disabled = false;
+        sendBtn.textContent = original;
+      }
+    });
+
+    // ---- Smart polling ----
+    // Only poll when: tab is active AND chat is on-screen.
+    // Pauses when tab hidden or chat off-screen to save Apps Script quota.
+    function scheduleNext() {
+      if (pollTimer) clearTimeout(pollTimer);
+      if (document.hidden || !chatVisible) return;
+      pollTimer = setTimeout(() => { loadMessages().finally(scheduleNext); }, POLL_INTERVAL);
+    }
+
+    // Pause when tab hidden, resume when visible
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden && chatVisible) { loadMessages().finally(scheduleNext); }
+    });
+
+    // Only poll while chat section is in viewport
+    var chatSection = document.getElementById("contact");
+    if (chatSection && "IntersectionObserver" in window) {
+      var io = new IntersectionObserver(function (entries) {
+        chatVisible = entries[0].isIntersecting;
+        if (chatVisible && !document.hidden) { loadMessages().finally(scheduleNext); }
+      }, { threshold: 0.15 });
+      io.observe(chatSection);
+    } else {
+      // Fallback: treat as always visible
+      chatVisible = true;
+      loadMessages().finally(scheduleNext);
+    }
+  })();
+</script>

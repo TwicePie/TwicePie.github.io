@@ -1,0 +1,16 @@
+---
+// T.astro — Renders bilingual text. Toggles via html[data-lang].
+// Usage: <T en="Hello" id="Halo" />
+const { en, id, tag = "span" } = Astro.props;
+const Tag = tag as any;
+---
+<Tag class="t-en" data-en>{en}</Tag><Tag class="t-id" data-id>{id}</Tag>
+
+<style is:global>
+  /* Show only the active language. Zero-JS first paint works because
+     the <html> tag defaults to data-lang="en" set in Layout.astro. */
+  html[data-lang="id"] .t-en { display: none !important; }
+  html[data-lang="en"] .t-id { display: none !important; }
+  /* avoid stray whitespace issues for inline translations */
+  .t-en, .t-id { white-space: inherit; }
+</style>

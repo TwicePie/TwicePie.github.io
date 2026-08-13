@@ -1,0 +1,79 @@
+---
+// Projects.astro — Featured project cards.
+import { projects, sections, ui } from "../data/content";
+import T from "./T.astro";
+---
+<section id="projects" class="section">
+  <div class="container">
+    <span class="section-label reveal">05 — <T en={sections.projects.en} id={sections.projects.id} /></span>
+    <h2 class="section-title reveal"><T en={sections.projects.en} id={sections.projects.id} /></h2>
+    <div class="projects-grid">
+      {projects.map((p) => (
+        <article class="project-card reveal">
+          <div class="card-top">
+            <span class="project-tag mono"><T en={p.tag.en} id={p.tag.id} /></span>
+            <span class="project-year mono">{p.year}</span>
+          </div>
+          <h3 class="project-title">{p.title}</h3>
+          <p class="project-desc"><T en={p.description.en} id={p.description.id} /></p>
+          <div class="project-tech">
+            {p.tech.map((t) => <span class="tech-chip mono">{t}</span>)}
+          </div>
+          {p.link && (
+            <a href={p.link} target="_blank" rel="noopener" class="project-link">
+              <T en={ui.viewProject.en} id={ui.viewProject.id} /> →
+            </a>
+          )}
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .projects-grid { display: grid; gap: 1.5rem; }
+  .project-card {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 2rem;
+    background: var(--color-surface);
+    transition: border-color var(--transition), transform var(--transition);
+  }
+  .project-card:hover { border-color: var(--color-text-dim); transform: translateY(-3px); }
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  .project-tag {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text-dim);
+    border: 1px solid var(--color-border);
+    border-radius: 20px;
+    padding: 0.25rem 0.75rem;
+  }
+  .project-year { font-size: 0.78rem; color: var(--color-text-dim); }
+  .project-title { font-size: 1.35rem; margin-bottom: 0.75rem; }
+  .project-desc { font-size: 0.95rem; line-height: 1.7; margin-bottom: 1.25rem; }
+  .project-tech { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .tech-chip {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    background: var(--color-bg);
+    border-radius: var(--radius-sm);
+    padding: 0.3rem 0.6rem;
+  }
+  .project-link {
+    display: inline-block;
+    margin-top: 1.5rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    border-bottom: 1px solid var(--color-text-dim);
+    padding-bottom: 2px;
+    transition: border-color var(--transition), color var(--transition);
+  }
+  .project-link:hover { border-color: var(--color-accent); }
+</style>

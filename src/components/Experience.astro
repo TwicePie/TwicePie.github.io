@@ -1,0 +1,107 @@
+---
+// Experience.astro — Timeline layout. Work + Internships.
+import { experiences, sections } from "../data/content";
+import T from "./T.astro";
+---
+<section id="experience" class="section">
+  <div class="container">
+    <span class="section-label reveal">03 — <T en={sections.experience.en} id={sections.experience.id} /></span>
+    <h2 class="section-title reveal"><T en={sections.experience.en} id={sections.experience.id} /></h2>
+    <div class="timeline">
+      {experiences.map((exp) => (
+        <article class="timeline-item reveal">
+          <div class="timeline-marker">
+            <span class="marker-dot"></span>
+            <span class="marker-line"></span>
+          </div>
+          <div class="timeline-card">
+            <div class="card-head">
+              <div>
+                <h3><T en={exp.role.en} id={exp.role.id} /></h3>
+                <p class="card-org">{exp.org}</p>
+              </div>
+              <div class="card-meta">
+                <span class="badge mono"><T en={exp.type.en} id={exp.type.id} /></span>
+                <span class="card-period mono">{exp.period}</span>
+              </div>
+            </div>
+            <ul class="card-points reveal-stagger">
+              {exp.points.map((pt) => (
+                <li><span class="bullet">—</span><span><T en={pt.en} id={pt.id} /></span></li>
+              ))}
+            </ul>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .timeline { display: flex; flex-direction: column; }
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    gap: 1.5rem;
+  }
+  .timeline-marker {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 0.5rem;
+  }
+  .marker-dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    border: 2px solid var(--color-accent);
+    background: var(--color-bg);
+    flex-shrink: 0;
+    z-index: 1;
+  }
+  .marker-line {
+    width: 1px;
+    flex: 1;
+    background: var(--color-border);
+    margin-top: 0.5rem;
+  }
+  .timeline-item:last-child .marker-line { display: none; }
+
+  .timeline-card {
+    padding-bottom: 2.5rem;
+  }
+  .card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+  }
+  .card-org { color: var(--color-text-muted); margin-top: 0.25rem; font-size: 0.9rem; }
+  .card-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 0.4rem; }
+  .badge {
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: 1px solid var(--color-border);
+    border-radius: 20px;
+    padding: 0.2rem 0.6rem;
+    color: var(--color-text-muted);
+  }
+  .card-period { font-size: 0.78rem; color: var(--color-text-dim); }
+
+  .card-points { display: flex; flex-direction: column; gap: 0.65rem; }
+  .card-points li {
+    display: flex;
+    gap: 0.6rem;
+    font-size: 0.92rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+  }
+  .bullet { color: var(--color-text-dim); flex-shrink: 0; }
+
+  @media (max-width: 600px) {
+    .timeline-item { grid-template-columns: 28px 1fr; gap: 1rem; }
+    .card-meta { align-items: flex-start; }
+  }
+</style>

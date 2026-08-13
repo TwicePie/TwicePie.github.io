@@ -1,0 +1,50 @@
+---
+// Education.astro
+import { education, sections } from "../data/content";
+import T from "./T.astro";
+---
+<section id="education" class="section section-alt">
+  <div class="container">
+    <span class="section-label reveal">02 — <T en={sections.education.en} id={sections.education.id} /></span>
+    <h2 class="section-title reveal"><T en={sections.education.en} id={sections.education.id} /></h2>
+    <div class="edu-list">
+      {education.map((e) => (
+        <article class="edu-card reveal">
+          <div class="edu-icon mono">EDU</div>
+          <div class="edu-body">
+            <h3><T en={e.degree.en} id={e.degree.id} /></h3>
+            <p class="edu-school">{e.school}</p>
+            <span class="edu-period mono">{e.period}</span>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .section-alt { background: var(--color-surface); border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); }
+  .edu-list { display: grid; gap: 1rem; }
+  .edu-card {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    padding: 1.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background: var(--color-bg);
+    transition: border-color var(--transition), transform var(--transition);
+  }
+  .edu-card:hover { border-color: var(--color-text-dim); transform: translateY(-2px); }
+  .edu-icon {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: 0.5rem 0.75rem;
+    color: var(--color-text-dim);
+    flex-shrink: 0;
+  }
+  .edu-school { color: var(--color-text); margin-top: 0.25rem; }
+  .edu-period { font-size: 0.8rem; color: var(--color-text-dim); display: inline-block; margin-top: 0.5rem; }
+</style>

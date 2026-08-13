@@ -1,0 +1,17 @@
+# build output
+dist/
+# astro generated types/cache
+.astro/
+# apps script backend (contains private secrets — keep local only, paste into Google Apps Script)
+public/apps-script/
+# dependencies
+node_modules/
+# logs
+npm-debug.log*
+# environment
+.env
+.env.local
+# macOS
+.DS_Store
+# editor
+.vscode/

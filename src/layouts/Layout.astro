@@ -1,0 +1,81 @@
+---
+// Layout.astro — HTML shell. Imports global CSS, sets up header nav,
+// language toggle, scroll-reveal, and the footer.
+import "../styles/global.css";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { profile } from "../data/content";
+
+const { title = "Muhammad Eka Nur Arief — Portfolio", description = "Data Analyst & Web Developer portfolio" } = Astro.props;
+---
+<!doctype html>
+<html lang="en" data-lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="author" content={profile.name} />
+    <meta property="og:title" content={profile.name} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <Header />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+
+    <!-- Language toggle + scroll reveal. Tiny, inline, no dependencies. -->
+    <script is:inline>
+      // ---- Language toggle ----
+      (function () {
+        const html = document.documentElement;
+        const saved = localStorage.getItem("lang");
+        if (saved === "id" || saved === "en") html.setAttribute("data-lang", saved);
+        const btn = document.getElementById("lang-toggle");
+        if (btn) {
+          const sync = () => {
+            btn.textContent = html.getAttribute("data-lang") === "id" ? "EN" : "ID";
+          };
+          sync();
+          btn.addEventListener("click", () => {
+            const next = html.getAttribute("data-lang") === "id" ? "en" : "id";
+            html.setAttribute("data-lang", next);
+            localStorage.setItem("lang", next);
+            document.querySelectorAll("[data-lang-current]").forEach((el) => {
+              el.setAttribute("data-lang-current", next);
+            });
+            sync();
+          });
+        }
+      })();
+
+      // ---- Scroll reveal via IntersectionObserver ----
+      (function () {
+        const els = document.querySelectorAll(".reveal, .reveal-stagger");
+        if (!("IntersectionObserver" in window) || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          els.forEach((el) => el.classList.add("is-visible"));
+          return;
+        }
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((e) => {
+              if (e.isIntersecting) {
+                e.target.classList.add("is-visible");
+                io.unobserve(e.target);
+              }
+            });
+          },
+          { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+        );
+        els.forEach((el) => io.observe(el));
+      })();
+    </script>
+  </body>
+</html>

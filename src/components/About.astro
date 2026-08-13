@@ -1,0 +1,69 @@
+---
+// About.astro
+import { about, sections } from "../data/content";
+import T from "./T.astro";
+---
+<section id="about" class="section">
+  <div class="container">
+    <span class="section-label reveal">01 — <T en={sections.about.en} id={sections.about.id} /></span>
+    <h2 class="section-title reveal"><T en={sections.about.en} id={sections.about.id} /></h2>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p><T en={about.p1.en} id={about.p1.id} /></p>
+        <p class="mt-3"><T en={about.p2.en} id={about.p2.id} /></p>
+      </div>
+      <aside class="about-focus reveal">
+        <h3 class="mono focus-title"><T en={about.focusTitle.en} id={about.focusTitle.id} /></h3>
+        <ul class="focus-list reveal-stagger">
+          {about.focus.map((f) => (
+            <li>
+              <span class="focus-dot"></span>
+              <span><T en={f.en} id={f.id} /></span>
+            </li>
+          ))}
+        </ul>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+  .about-text p { font-size: 1.05rem; line-height: 1.8; }
+  .about-focus {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+    background: var(--color-surface);
+  }
+  .focus-title {
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-text-dim);
+    margin-bottom: 1.25rem;
+  }
+  .focus-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--color-border);
+    font-size: 0.92rem;
+  }
+  .focus-list li:last-child { border-bottom: none; }
+  .focus-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    flex-shrink: 0;
+  }
+  @media (max-width: 768px) {
+    .about-grid { grid-template-columns: 1fr; }
+  }
+</style>

@@ -1,0 +1,41 @@
+---
+// Skills.astro — Tag cloud of skills & technologies.
+import { skills, sections } from "../data/content";
+import T from "./T.astro";
+---
+<section id="skills" class="section section-alt">
+  <div class="container">
+    <span class="section-label reveal">04 — <T en={sections.skills.en} id={sections.skills.id} /></span>
+    <h2 class="section-title reveal"><T en={sections.skills.en} id={sections.skills.id} /></h2>
+    <div class="skills-grid reveal-stagger">
+      {skills.map((s) => (
+        <span class="skill-tag">{s}</span>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .section-alt { background: var(--color-surface); border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); }
+  .skills-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  .skill-tag {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    padding: 0.55rem 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 30px;
+    color: var(--color-text-muted);
+    background: var(--color-bg);
+    transition: all var(--transition);
+    cursor: default;
+  }
+  .skill-tag:hover {
+    border-color: var(--color-accent);
+    color: var(--color-text);
+    transform: translateY(-2px);
+  }
+</style>
