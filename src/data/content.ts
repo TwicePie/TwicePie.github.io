@@ -16,13 +16,14 @@ export const profile = {
   github: "https://github.com/TwicePie",
   cv: "/CV_Eka.pdf",
   photo: "/Profile.jpg",
+  gdrive: "https://drive.google.com/drive/u/0/folders/1NC0kJaFlRLL8VIhpf1d0_91YU6Kpqa2F",
 };
 
 export const hero = {
   greeting: { en: "Hi, I'm", id: "Halo, saya" } as Bi,
   title: {
-    en: "Data Analyst & Web Developer",
-    id: "Data Analyst & Web Developer",
+    en: "Data Analyst",
+    id: "Data Analyst",
   } as Bi,
   bio: {
     en: "Informatics graduate from Universitas Muhammadiyah Malang, skilled in data analysis, data visualization, and web development. Experienced in building analytic dashboards and identifying data patterns. Passionate about building a career in data analytics and creating efficient, data-driven solutions.",
@@ -30,6 +31,7 @@ export const hero = {
   } as Bi,
   ctaContact: { en: "Get in Touch", id: "Hubungi Saya" } as Bi,
   ctaCV: { en: "Download CV", id: "Unduh CV" } as Bi,
+  ctaDrive: { en: "Experience Details", id: "Detail Pengalaman" } as Bi,
 };
 
 export const nav = {
@@ -89,49 +91,21 @@ export interface ExperienceItem {
 export const experiences: ExperienceItem[] = [
   {
     role: { en: "QA Analyst", id: "QA Analyst" } as Bi,
-    org: "Freelance",
+    org: "Patman Interactive",
     period: "Jan 2026 — Jul 2026",
     type: { en: "Freelance", id: "Freelance" } as Bi,
     points: [
       {
-        en: "Designed and documented Business Requirements & Business Models as a reference for functional testing of applications/websites.",
-        id: "Merancang dan mendokumentasikan Business Requirements & Business Model sebagai acuan pengujian fungsionalitas aplikasi/website.",
+        en: "Prepared Business Requirements documentation and business models as a reference for system development and testing.",
+        id: "Menyusun dokumentasi Business Requirements dan model bisnis sebagai acuan pengembangan dan pengujian sistem.",
       },
       {
-        en: "Performed functional testing on application/website features to ensure alignment with the designed business model.",
-        id: "Melakukan functional testing pada fitur-fitur aplikasi/website untuk memastikan kesesuaian dengan business model yang telah dirancang.",
+        en: "Performed functional testing to validate business flows and ensure the system meets user needs.",
+        id: "Melakukan functional testing untuk memvalidasi alur bisnis dan memastikan sistem sesuai kebutuhan pengguna.",
       },
       {
-        en: "Identified, documented, and reported bugs and defects in applications/websites to the development team for resolution.",
-        id: "Mengidentifikasi, mendokumentasikan, dan melaporkan bug serta defect pada aplikasi/website kepada tim pengembang untuk perbaikan.",
-      },
-      {
-        en: "Verified that business flows in applications/websites ran according to specifications and end-user requirements.",
-        id: "Memverifikasi bahwa alur bisnis (business flow) pada aplikasi/website berjalan sesuai dengan spesifikasi dan kebutuhan pengguna akhir.",
-      },
-    ],
-  },
-  {
-    role: { en: "Website & Internet Operator", id: "Operator Website & Internet" } as Bi,
-    org: "Fakultas Hukum UMM",
-    period: "Oct 2025 — Mar 2026",
-    type: { en: "Work", id: "Kerja" } as Bi,
-    points: [
-      {
-        en: "Managed and connected computer networks to support smooth data transfer and system operations.",
-        id: "Mengelola dan menghubungkan jaringan antar perangkat komputer untuk mendukung kelancaran transfer data dan operasional sistem.",
-      },
-      {
-        en: "Troubleshot and repaired office applications (Microsoft Access, Word, Excel) to improve user productivity.",
-        id: "Melakukan troubleshooting dan perbaikan pada aplikasi perkantoran seperti Microsoft Access, Word, dan Excel untuk meningkatkan produktivitas pengguna.",
-      },
-      {
-        en: "Designed and developed the UI for the Kios Laboratorium Fakultas Hukum UMM website.",
-        id: "Merancang dan mengembangkan desain antarmuka (UI) website Kios Laboratorium Fakultas Hukum UMM.",
-      },
-      {
-        en: "Identified and fixed frontend bugs to improve website performance and user experience.",
-        id: "Mengidentifikasi dan memperbaiki bug pada kode frontend website guna meningkatkan performa dan pengalaman pengguna.",
+        en: "Documented and reported bugs to the development team, and provided input for product functionality improvements.",
+        id: "Mendokumentasikan dan melaporkan bug kepada tim pengembang, serta memberikan masukan untuk penyempurnaan fungsionalitas produk.",
       },
     ],
   },
@@ -142,40 +116,20 @@ export const experiences: ExperienceItem[] = [
     type: { en: "Internship", id: "Magang" } as Bi,
     points: [
       {
-        en: "Developed analytic dashboards showing employee distribution by category (position, status, or work unit).",
-        id: "Mengembangkan dashboard analitik yang menampilkan distribusi pegawai berdasarkan kategori tertentu (jabatan, status, atau unit kerja).",
+        en: "Developed analytic dashboards using Power BI to monitor asset distribution and condition by category.",
+        id: "Mengembangkan dashboard analitik menggunakan Power BI untuk memantau distribusi dan kondisi aset berdasarkan kategori.",
       },
       {
-        en: "Identified patterns and trends in employee data to support operational decision-making.",
-        id: "Mengidentifikasi pola dan tren dalam data pegawai yang mendukung pengambilan keputusan operasional.",
+        en: "Identified patterns and trends in asset data to support annual operational decision-making.",
+        id: "Mengidentifikasi pola dan tren dalam data aset untuk mendukung pengambilan keputusan operasional tahunan.",
       },
       {
-        en: "Improved data processing and reporting efficiency by ~25% through dashboard visualization automation.",
-        id: "Meningkatkan efisiensi pengolahan dan pelaporan data hingga ±25% melalui otomatisasi visualisasi dashboard.",
-      },
-    ],
-  },
-  {
-    role: { en: "Fullstack Engineer", id: "Fullstack Engineer" } as Bi,
-    org: "CV. Indo Azka Konsultan",
-    period: "Jan 2025 — Mar 2025",
-    type: { en: "Internship", id: "Magang" } as Bi,
-    points: [
-      {
-        en: "Contributed as a Frontend Developer in the comprehensive development of an E-commerce website.",
-        id: "Berkontribusi sebagai Frontend Developer dalam pengembangan situs web E-commerce secara komprehensif.",
+        en: "Initiated data visualization automation that improved data processing and reporting efficiency by ~25%.",
+        id: "Menginisiasi otomatisasi visualisasi data yang berhasil meningkatkan efisiensi pengolahan dan pelaporan data hingga ±25%.",
       },
       {
-        en: "Designed UI/UX to create an intuitive and visually appealing user experience.",
-        id: "Merancang UI/UX untuk menciptakan pengalaman pengguna yang intuitif dan menarik secara visual.",
-      },
-      {
-        en: "Built the website interface with React and implemented data fetching to display dynamic content effectively.",
-        id: "Mengembangkan antarmuka situs web menggunakan React dan mengimplementasikan pengambilan data (data fetching) untuk menampilkan konten dinamis secara efektif.",
-      },
-      {
-        en: "Optimized frontend performance to speed up load time and ensure smooth user interaction.",
-        id: "Mengoptimalkan performa frontend guna mempercepat waktu muat (load time) dan memastikan interaksi pengguna berjalan lancar.",
+        en: "Presented analysis results to internal teams as evaluation material on asset distribution.",
+        id: "Menyajikan hasil analisis kepada internal sebagai bahan evaluasi terkait persebaran aset.",
       },
     ],
   },
@@ -206,6 +160,16 @@ export const projects: ProjectItem[] = [
       id: "Penelitian komparatif terhadap beberapa metode topic modeling berbasis Transformer seperti BERTopic. Mengolah 200.000 data teks tidak terstruktur menggunakan teknik preprocessing NLP dan mengevaluasi performa model dengan coherence score dan interpretabilitas topik hingga mencapai ~70%.",
     } as Bi,
     tech: ["Python", "BERTopic", "NLP", "Transformers"],
+  },
+  {
+    title: "E-Commerce Website — CV. Indo Azka Konsultan",
+    year: "Jan 2025 — Mar 2025",
+    tag: { en: "Internship · Frontend", id: "Magang · Frontend" } as Bi,
+    description: {
+      en: "Contributed as a Frontend Developer in the comprehensive development of an E-commerce website. Designed an intuitive and visually appealing UI/UX, built the website interface with React and implemented data fetching to display dynamic content effectively, and optimized frontend performance to speed up load time and ensure smooth user interaction.",
+      id: "Berkontribusi sebagai Frontend Developer dalam pengembangan situs web E-commerce secara komprehensif. Merancang UI/UX yang intuitif dan menarik secara visual, membangun antarmuka situs web menggunakan React dan mengimplementasikan data fetching untuk menampilkan konten dinamis secara efektif, serta mengoptimalkan performa frontend guna mempercepat waktu muat dan memastikan interaksi pengguna berjalan lancar.",
+    } as Bi,
+    tech: ["React", "JavaScript", "REST API", "UI/UX"],
   },
   {
     title: "Pujasera Kuliner Tegal Timur Surabaya",
@@ -247,5 +211,5 @@ export const ui = {
   chatPlaceholderName: { en: "e.g. John Doe", id: "cth. Budi" } as Bi,
   chatPlaceholderMsg: { en: "Write something nice...", id: "Tulis sesuatu yang baik..." } as Bi,
   footerRights: { en: "All rights reserved.", id: "Hak cipta dilindungi." } as Bi,
-  footerBuilt: { en: "Built with Astro · No heavy frameworks", id: "Dibangun dengan Astro · Tanpa framework berat" } as Bi,
+  footerBuilt: { en: "Built with Astro", id: "Dibangun dengan Astro" } as Bi,
 };
